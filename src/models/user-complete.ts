@@ -1,4 +1,4 @@
-interface UserValidated {
+interface UserComplete {
     id: string;
     cpf: string;
     name: string;
@@ -6,4 +6,4 @@ interface UserValidated {
     birthday: string;
 }
 
-export { UserValidated };
+export { UserComplete };

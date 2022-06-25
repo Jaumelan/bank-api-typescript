@@ -1,9 +1,8 @@
-interface User {
+interface UserValidated {
     cpf: string;
     name: string;
     email: string;
-    password: string;
     birthdate: string;
 }
 
-export { User };
+export { UserValidated };

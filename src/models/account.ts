@@ -1,8 +1,10 @@
 interface Account {
     id: string;
-    agency: number;
-    account: number;
-    verifyd: number;
+    userID: string;
+    agency: string;
+    verifyDigitAgency: string;
+    account: string;
+    verifyDigitAccount: string;
     balance: number;
 }
 

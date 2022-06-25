@@ -3,43 +3,54 @@ import {
   EmailValidator,
   CPFValidator,
   DateValidator,
-} from ".";
-import { User } from "../models";
+  PasswordValidator,
+} from '.';
+import { User } from '../models';
 
 class UserDataValidator {
   public user: User;
+
   public errors: string;
 
-  private nameValidator = UserNameValidator;
-  private emailValidator = EmailValidator;
-  private cpfValidator = CPFValidator;
-  private dateValidator = DateValidator;
+  private NameValidator = UserNameValidator;
+
+  private EmailValidator = EmailValidator;
+
+  private CpfValidator = CPFValidator;
+
+  private DateValidator = DateValidator;
+
+  private PasswordValidator = PasswordValidator;
 
   public constructor(user: User) {
-    this.errors = "";
+    this.errors = '';
     this.user = this.validate(user);
   }
 
   private validate(user: User): User {
-    const { name, email, cpf, birthday } = user;
+    const {
+      name, email, cpf, birthdate, password,
+    } = user;
 
-    const nameValidated = new this.nameValidator(name);
-    const emailValidated = new this.emailValidator(email);
-    const cpfValidated = new this.cpfValidator(cpf);
-    const dateValidated = new this.dateValidator(birthday);
+    const nameValidated = new this.NameValidator(name);
+    const emailValidated = new this.EmailValidator(email);
+    const cpfValidated = new this.CpfValidator(cpf);
+    const dateValidated = new this.DateValidator(birthdate);
+    const passwordValidated = new this.PasswordValidator(password);
 
-    this.errors =
-      nameValidated.errors +
-      emailValidated.errors +
-      cpfValidated.errors +
-      dateValidated.errors;
+    this.errors = nameValidated.errors
+      + emailValidated.errors
+      + cpfValidated.errors
+      + dateValidated.errors
+      + passwordValidated.errors;
 
-      //console.log("userdata ", this.errors);
+    // console.log("userdata ", this.errors);
     const userValidated: User = {
       name: nameValidated.userName,
       email: emailValidated.email,
       cpf: cpfValidated.cpf,
-      birthday: dateValidated.date,
+      birthdate: dateValidated.date,
+      password: passwordValidated.password,
     };
 
     return userValidated;
