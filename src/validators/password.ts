@@ -3,7 +3,7 @@ class PasswordValidator {
 
   public password: string;
 
-  private passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  private passwordRegex = /^[0-9]+$/;
 
   public constructor(password: string) {
     this.errors = '';
@@ -21,13 +21,13 @@ class PasswordValidator {
       return '';
     }
 
-    if (password.length > 20) {
-      this.errors += 'password:A senha deve conter no máximo 20 caracteres.|';
+    if (password.length > 8) {
+      this.errors += 'password:A senha deve conter no máximo 8 caracteres.|';
       return '';
     }
 
     if (!this.passwordRegex.test(password)) {
-      this.errors += 'password:A senha deve conter letras maiúsculas, minúsculas, números e caracteres especiais.|';
+      this.errors += 'password:A senha deve conter só números.|';
       return '';
     }
 

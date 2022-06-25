@@ -3,7 +3,7 @@ interface UserComplete {
     cpf: string;
     name: string;
     email: string;
-    birthday: string;
+    birthdate: string;
 }
 
 export { UserComplete };

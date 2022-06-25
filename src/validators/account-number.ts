@@ -1,30 +1,30 @@
 class AccountNumberValidator {
   public errors: string;
 
-  public accountNumber: string;
+  public account: string;
 
-  public constructor(accountNumber: string) {
+  public constructor(account: string) {
     this.errors = '';
-    this.accountNumber = this.validate(accountNumber);
+    this.account = this.validate(account);
   }
 
-  private validate(accountNumber: string): string {
-    if (!accountNumber) {
+  private validate(account: string): string {
+    if (!account) {
       this.errors += 'accountNumber:O número da conta não pode ser vazio.|';
       return '';
     }
 
-    if (accountNumber.length < 10) {
+    if (account.length < 10) {
       this.errors += 'accountNumber:O número da conta deve conter no mínimo 10 caracteres.|';
       return '';
     }
 
-    if (accountNumber.length > 10) {
+    if (account.length > 10) {
       this.errors += 'accountNumber:O número da conta deve conter no máximo 10 caracteres.|';
       return '';
     }
 
-    return accountNumber.trim();
+    return account.trim();
   }
 }
 
