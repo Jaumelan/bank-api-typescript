@@ -1,4 +1,4 @@
-interface Transaction {
+interface TransactionRequisition {
     originAccount: {
         agency: string;
         verifyDigitAgency: string;
@@ -18,4 +18,4 @@ interface Transaction {
     transactionType: string;
 }
 
-export { Transaction };
+export { TransactionRequisition };

@@ -1,8 +1,8 @@
 import { PostgresDB } from '.';
-import { User } from '../../../models';
+import { UserComplete } from '../../../models';
 
 class UsersTable extends PostgresDB {
-  public async insert(user: User): Promise<boolean> {
+  public async insert(user: UserComplete): Promise<boolean> {
     try {
       this.client.connect();
 
