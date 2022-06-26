@@ -95,17 +95,17 @@ API Bancária com Typescript:
         ✔ value @done(22-06-25 16:36)
         ✔ type @done(22-06-25 16:36)
     Insominia:
-      ☐ configurar ambientes e variáveis
+      ✔ configurar ambientes e variáveis @done(22-06-25 21:17)
       endpoints:
         Get extrated (GET):
-          ☐ URL /extract
+          ✔ URL /extract @done(22-06-25 21:17)
           QUERYS STRINGS (filters):
-            ☐ agencyNumber
-            ☐ agencyVerificationCode
-            ☐ accountNumber
-            ☐ accountVerificationCode
-            ☐ document
-          ☐ RESPONSE: {
+            ✔ agencyNumber @done(22-06-25 21:17)
+            ✔ agencyVerificationCode @done(22-06-25 21:17)
+            ✔ accountNumber @done(22-06-25 21:17)
+            ✔ accountVerificationCode @done(22-06-25 21:17)
+            ✔ document @done(22-06-25 21:17)
+          ✔ RESPONSE: { @done(22-06-25 21:17)
             "data": {
               "agencyNumber": 4570,
               "agencyVerificationCode": 8,
@@ -125,8 +125,8 @@ API Bancária com Typescript:
             "messages": null
           }
         Make deposit (POST):
-          ☐ URL /desposit
-          ☐ BODY: {
+          ✔ URL /desposit @done(22-06-25 21:17)
+          ✔ BODY: { @done(22-06-25 21:17)
             "account": {
               "agencyNumber": 4570,
               "agencyVerificationCode": 8,
@@ -136,7 +136,7 @@ API Bancária com Typescript:
             }
             "value": 123.45
           }
-          ☐ RESPONSE: {
+          ✔ RESPONSE: { @done(22-06-25 21:17)
             "data": {
               "transactionId": "",
               "type": "deposit",
@@ -154,8 +154,8 @@ API Bancária com Typescript:
             "messages": null
           }
         Make transfer (POST):
-          ☐ URL /transfer
-          ☐ BODY: {
+          ✔ URL /transfer @done(22-06-25 21:17)
+          ✔ BODY: { @done(22-06-25 21:17)
             "originAccount": {
               "agencyNumber": 4570,
               "agencyVerificationCode": 8,
@@ -173,7 +173,7 @@ API Bancária com Typescript:
             },
             "value": 15.51
           }
-          ☐ RESPONSE: {
+          ✔ RESPONSE: { @done(22-06-25 21:17)
             "data": {
               "transactionId": "",
               "type": "transfer",
@@ -197,8 +197,8 @@ API Bancária com Typescript:
             "messages": null
           }
         Make draft (POST):
-          ☐ URL /draft
-          ☐ BODY: {
+          ✔ URL /draft @started(22-06-25 21:17) @done(22-06-25 21:17) @lasted(48s)
+          ✔ BODY: { @started(22-06-25 21:17) @done(22-06-25 21:17) @lasted(48s)
             "account": {
               "agencyNumber": 4570,
               "agencyVerificationCode": 8,
@@ -209,7 +209,7 @@ API Bancária com Typescript:
             }
             "value": 123.45
           }
-          ☐ RESPONSE: {
+          ✔ RESPONSE: { @done(22-06-25 21:17)
             "data": {
               "transactionId": "",
               "type": "draft",
@@ -227,14 +227,14 @@ API Bancária com Typescript:
             "messages": null
           }
         Create account (POST):
-          ☐ URL /create-account
-          ☐ BODY: {
+          ✔ URL /create-account @done(22-06-25 21:17)
+          ✔ BODY: { @done(22-06-25 21:17)
             "name": "Anderson Ferreira Alves",
             "document": "76763008007",
             "birthdate": "1995-01-31",
             "accountPassword": "2222"
           }
-          ☐ RESPONSE: {
+          ✔ RESPONSE: { @done(22-06-25 21:18)
             "data": {
               "agencyNumber": 4570,
               "agencyVerificationCode": 8,

@@ -14,13 +14,13 @@ class AccountNumberValidator {
       return '';
     }
 
-    if (account.length < 10) {
-      this.errors += 'accountNumber:O número da conta deve conter no mínimo 10 caracteres.|';
+    if (account.length < 6) {
+      this.errors += 'accountNumber:O número da conta deve conter no mínimo 6 caracteres.|';
       return '';
     }
 
-    if (account.length > 10) {
-      this.errors += 'accountNumber:O número da conta deve conter no máximo 10 caracteres.|';
+    if (account.length > 6) {
+      this.errors += 'accountNumber:O número da conta deve conter no máximo 6 caracteres.|';
       return '';
     }
 

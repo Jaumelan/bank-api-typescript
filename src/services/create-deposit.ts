@@ -1,0 +1,5 @@
+class CreateDepositTransfer {
+
+}
+
+export { CreateDepositTransfer };

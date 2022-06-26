@@ -1,10 +1,21 @@
 interface Transaction {
-    transactionID: string;
-    originAccountID: string;
-    destinationAccountID: string;
-    date: string;
-    value: number;
-    type: string;
+    originAccount: {
+        agency: string;
+        verifyDigitAgency: string;
+        account: string;
+        verifyDigitAccount: string;
+        document: string;
+        password: string;
+    }
+    destinationAccount: {
+        agency: string;
+        verifyDigitAgency: string;
+        account: string;
+        verifyDigitAccount: string;
+        document: string;
+    }
+    amount: number;
+    transactionType: string;
 }
 
 export { Transaction };

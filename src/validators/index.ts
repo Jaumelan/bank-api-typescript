@@ -9,3 +9,4 @@ export { TransferAmountValidtor } from './amount';
 export { TransactionTypeValidator } from './transaction-type';
 export { VerifyDigitAgencyValidator } from './verify-digit-agency';
 export { VerifyDigitAccountValidator } from './verify-digit-account';
+export { AgencyNumberValidator } from './agency-number';

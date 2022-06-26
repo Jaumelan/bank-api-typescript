@@ -3,7 +3,7 @@ class CPFValidator {
 
   public cpf: string;
 
-  private cpfRegex = /\d{3}\.\d{3}\.\d{3}S-\d{2}/gi;
+  private cpfRegex = /^\d{11}$/gi;
 
   public constructor(cpf: string) {
     this.errors = '';
@@ -16,13 +16,13 @@ class CPFValidator {
       return '';
     }
 
-    if (cpf.length < 14) {
-      this.errors += 'cpf:O CPF deve conter no mínimo 14 caracteres.|';
+    if (cpf.length < 11) {
+      this.errors += 'cpf:O CPF deve conter no mínimo 11 caracteres.|';
       return '';
     }
 
-    if (cpf.length > 14) {
-      this.errors += 'cpf:O CPF deve conter no máximo 14 caracteres.|';
+    if (cpf.length > 11) {
+      this.errors += 'cpf:O CPF deve conter no máximo 11 caracteres.|';
       return '';
     }
 
