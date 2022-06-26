@@ -1,19 +1,16 @@
 import { Request, Response } from 'express';
-import { CreateAccountService, CreateUserService } from '../services';
+import { CreateUserService } from '../services';
 import { ResponseWriter } from '../utils';
 
-class CreateAccountController {
-  private CreateAccountService = CreateAccountService;
-
+class CreateUserController {
   private CreateUserService = CreateUserService;
 
   private responseWriter = ResponseWriter;
 
   public async handle(request: Request, response: Response): Promise<void> {
     try {
-      // console.log('request ', request.body);
-      const userData = await new this.CreateUserService().execute(request.body);
-      const data = await new this.CreateAccountService().execute(userData.data);
+      // console.log(request.body);
+      const data = await new this.CreateUserService().execute(request.body);
 
       this.responseWriter.success(response, 201, data);
     } catch (error) {
@@ -22,4 +19,4 @@ class CreateAccountController {
   }
 }
 
-export { CreateAccountController };
+export { CreateUserController };

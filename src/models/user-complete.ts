@@ -4,6 +4,7 @@ interface UserComplete {
     name: string;
     email: string;
     birthdate: string;
+    password: string;
 }
 
 export { UserComplete };

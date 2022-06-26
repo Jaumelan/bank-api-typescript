@@ -1,5 +1,5 @@
-class CreateDepositTransfer {
+class CreateDepositService {
 
 }
 
-export { CreateDepositTransfer };
+export { CreateDepositService };

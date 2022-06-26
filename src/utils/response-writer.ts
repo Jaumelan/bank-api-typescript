@@ -13,21 +13,18 @@ class ResponseWriter {
 
       response.status(400).json({
         data: null,
-        message: errors,
+        messages: errors,
       } as APIResponse);
     } else {
       response.status(500).json({
         data: null,
-        message: ['Ocorreu um erro inesperado.'],
+        messages: ['Ocorreu um erro inesperado.'],
       } as APIResponse);
     }
   }
 
-  public static success(response: Response, data: any): void {
-    response.status(200).json({
-      data,
-      message: [],
-    } as APIResponse);
+  public static success(response: Response, statusCode: number, data: any): void {
+    response.status(statusCode).json(data);
   }
 }
 

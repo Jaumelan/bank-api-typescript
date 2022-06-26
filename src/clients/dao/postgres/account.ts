@@ -10,9 +10,9 @@ class AccountTable extends PostgresDB {
                 INSERT INTO accounts (
                     id,
                     agency_number,
-                    agency_verify_code,
+                    agency_verification_code,
                     account_number,
-                    account_verify_code,
+                    account_verification_code,
                     balance,
                     user_id
                 ) VALUES (

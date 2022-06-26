@@ -6,3 +6,5 @@ export { TransactionRequisition } from './transaction-requisition';
 export { TransactionDB } from './transaction-db';
 export { UserValidated } from './user-validated';
 export { AccountCreated } from './account-created';
+export { BankStatement } from './bank-statement';
+export { RequestBankStatement } from './request-statement';

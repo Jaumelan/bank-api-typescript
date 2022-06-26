@@ -11,12 +11,16 @@ class UsersTable extends PostgresDB {
                     id,
                     name,
                     email,
-                    birthdate
+                    birthdate,
+                    document,
+                    password
                 ) VALUES (
                     $1,
                     $2,
                     $3,
-                    $4
+                    $4,
+                    $5,
+                    $6
                 ) RETURNING id
             `;
 
@@ -25,6 +29,8 @@ class UsersTable extends PostgresDB {
         user.name,
         user.email,
         user.birthdate,
+        user.cpf,
+        user.password,
       ]);
 
       this.client.end();

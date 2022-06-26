@@ -16,13 +16,13 @@ class PasswordValidator {
       return '';
     }
 
-    if (password.length < 8) {
-      this.errors += 'password:A senha deve conter no mínimo 8 caracteres.|';
+    if (password.length < 10) {
+      this.errors += 'password:A senha deve conter no mínimo 10 caracteres.|';
       return '';
     }
 
-    if (password.length > 8) {
-      this.errors += 'password:A senha deve conter no máximo 8 caracteres.|';
+    if (password.length > 10) {
+      this.errors += 'password:A senha deve conter no máximo 10 caracteres.|';
       return '';
     }
 

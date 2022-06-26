@@ -1,6 +1,6 @@
 interface APIResponse {
     data: any;
-    message: string[];
+    messages: string[];
 }
 
 export { APIResponse };
