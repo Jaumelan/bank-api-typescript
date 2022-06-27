@@ -18,5 +18,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'off',
+    'eslint-disable-next-line max-len': 'on',
   },
 };

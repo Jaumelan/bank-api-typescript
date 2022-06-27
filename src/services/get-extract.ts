@@ -20,35 +20,37 @@ class GetExtractService {
       }
 
       const bankStatementReq = DataValidated.bankStatement;
-
+      // console.log('enviado ', bankStatementReq);
       const bankStatement = await new this.UsersTableData()
         .getUserData(bankStatementReq);
 
+      // console.log('bankStatement ', bankStatement);
+
       if (bankStatement.id !== '') {
         const account = await new this.AccountsTableData().getAccountsData(bankStatement);
-
-        if (bankStatementReq.accountNumber !== account.account) {
+        // console.log('account ', account);
+        if (bankStatementReq.accountNumber !== account.account_number) {
           return {
             data: {},
             messages: ['Account not found'],
           } as APIResponse;
         }
 
-        if (bankStatementReq.agencyNumber !== account.agency) {
+        if (bankStatementReq.agencyNumber !== account.agency_number) {
           return {
             data: {},
             messages: ['Agency not found'],
           } as APIResponse;
         }
 
-        if (bankStatementReq.agencyVerificationCode !== account.verifyDigitAgency) {
+        if (bankStatementReq.agencyVerificationCode !== account.agency_verification_code) {
           return {
             data: {},
             messages: ['Agency verify digit not found'],
           } as APIResponse;
         }
 
-        if (bankStatementReq.accountVerificationCode !== account.verifyDigitAccount) {
+        if (bankStatementReq.accountVerificationCode !== account.account_verification_code) {
           return {
             data: {},
             messages: ['Account verify digit not found'],
@@ -56,10 +58,10 @@ class GetExtractService {
         }
 
         const extract = {
-          agencyNumber: account.agency,
-          agencyVerificationCode: account.verifyDigitAgency,
-          accountNumber: account.account,
-          accountVerificationCode: account.verifyDigitAccount,
+          agencyNumber: account.agency_number,
+          agencyVerificationCode: account.agency_verification_code,
+          accountNumber: account.account_number,
+          accountVerificationCode: account.account_verification_code,
           balance: account.balance,
           document: bankStatement.cpf,
           name: bankStatement.name,

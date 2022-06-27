@@ -1,4 +1,5 @@
-import { ReqQuery, Response } from 'express';
+import { Request, Response } from 'express';
+import { RequestBankStatement } from '../models';
 import { GetExtractService } from '../services';
 import { ResponseWriter } from '../utils';
 
@@ -7,9 +8,13 @@ class BankStatementController {
 
   private GetExtract = GetExtractService;
 
-  public async handle(request: ReqQuery, response: Response): Promise<void> {
+  // eslint-disable-next-line no-undef
+  public async handle(
+    request: Request<{}, {}, {}, RequestBankStatement>,
+    response: Response,
+  ): Promise<void> {
     try {
-      console.log('request ', request.query);
+      // console.log('request received ', request.query);
       const data = await new this.GetExtract().execute(request.query);
 
       this.ResponseWriter.success(response, 200, data);

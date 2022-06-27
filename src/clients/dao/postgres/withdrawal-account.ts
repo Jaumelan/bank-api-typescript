@@ -1,7 +1,7 @@
-import { PostgresDB } from '.';
-import { AccountDB, UserComplete } from '../../../models';
+import { PostgresDB } from ".";
+import { AccountDB, UserComplete } from "../../../models";
 
-class BankStatementAccountsTable extends PostgresDB {
+class WithdrawalAccountTable extends PostgresDB {
   public async getAccountsData(data: UserComplete): Promise<AccountDB> {
     try {
       this.client.connect();
@@ -23,19 +23,19 @@ class BankStatementAccountsTable extends PostgresDB {
       }
 
       return {
-        id: '',
-        user_id: '',
-        agency_number: '',
-        agency_verification_code: '',
-        account_number: '',
-        account_verification_code: '',
+        id: "",
+        user_id: "",
+        agency_number: "",
+        agency_verification_code: "",
+        account_number: "",
+        account_verification_code: "",
         balance: 0,
       };
     } catch (error) {
       this.client.end();
-      throw new Error('503: service temporarily unavailable');
+      throw new Error("503: service temporarily unavailable");
     }
   }
 }
 
-export { BankStatementAccountsTable };
+export { WithdrawalAccountTable };

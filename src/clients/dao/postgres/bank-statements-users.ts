@@ -16,7 +16,7 @@ class BankStatementUsersTable extends PostgresDB {
 
       this.client.end();
 
-      console.log('resultUsers ', result.rows);
+      // console.log('resultUsers ', result.rows);
 
       if (result.rows.length !== 0) {
         return result.rows[0] as UserComplete;

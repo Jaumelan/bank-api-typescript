@@ -11,3 +11,4 @@ export { VerifyDigitAgencyValidator } from './verify-digit-agency';
 export { VerifyDigitAccountValidator } from './verify-digit-account';
 export { AgencyNumberValidator } from './agency-number';
 export { BankStatementDataValidator } from './bank-statement-data';
+export { WithdrawalReqValidator } from './transaction-withdrawal';

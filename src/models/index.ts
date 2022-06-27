@@ -8,3 +8,6 @@ export { UserValidated } from './user-validated';
 export { AccountCreated } from './account-created';
 export { BankStatement } from './bank-statement';
 export { RequestBankStatement } from './request-statement';
+export { RequisitiontBankStatement } from './extrato-query';
+export { AccountDB } from './account-db';
+export { WithdrawalReq } from './withdrawal-req';
