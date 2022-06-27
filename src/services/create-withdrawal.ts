@@ -1,7 +1,6 @@
 import { v4 } from "uuid";
 import {
   APIResponse,
-  User,
   WithdrawalResponse,
   WithdrawalReq,
   TransactionDB,
@@ -78,7 +77,7 @@ class CreateWithdrawalService {
           } as APIResponse;
         }
 
-        if (account.balance === 0.0) {
+        if (account.balance === 0.00) {
           return {
             data: {},
             messages: ["Account balance is zero"],

@@ -1,4 +1,4 @@
-interface TransactionRequisition {
+interface TransactionValidated {
   originAccount: {
     agencyNumber: string;
     agencyVerificationCode: string;
@@ -14,7 +14,7 @@ interface TransactionRequisition {
     accountVerificationCode: string;
     document: string;
   };
-  amount: string;
+  amount: number;
 }
 
-export { TransactionRequisition };
+export { TransactionValidated };

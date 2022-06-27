@@ -15,3 +15,7 @@ export { AccountUpdate } from './account-update';
 export { WithdrawalResponse } from './withdrawal-response';
 export { UserDB } from './user-db';
 export { WithdrawalValidated } from './withdrawal-validated';
+export { DepositRequisition } from './deposit-req';
+export { DepositValidated } from './deposit-validated';
+export { TransactionValidated } from './transaction-validated';
+export { TransferResponse } from './transfer-response';

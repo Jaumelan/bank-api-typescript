@@ -13,3 +13,5 @@ export { AgencyNumberValidator } from './agency-number';
 export { BankStatementDataValidator } from './bank-statement-data';
 export { WithdrawalReqValidator } from './transaction-withdrawal';
 export { AmountValidator } from './value';
+export { DepositValidator } from './deposit-data';
+export { TransferValidator } from './transfer-data';
