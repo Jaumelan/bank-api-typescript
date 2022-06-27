@@ -1,8 +1,8 @@
 import { PostgresDB } from '.';
-import { UserComplete, WithdrawalReq } from '../../../models';
+import { UserDB, WithdrawalValidated } from '../../../models';
 
 class WithdrawalUsersTable extends PostgresDB {
-    public async getUserData(data: WithdrawalReq): Promise<UserComplete> {
+    public async getUserData(data: WithdrawalValidated): Promise<UserDB> {
         try {
             this.client.connect();
 
@@ -19,13 +19,13 @@ class WithdrawalUsersTable extends PostgresDB {
             // console.log('resultUsers ', result.rows);
 
             if (result.rows.length !== 0) {
-                return result.rows[0] as UserComplete;
+                return result.rows[0] as UserDB;
             }
 
             return {
                 id: '',
                 name: '',
-                cpf: '',
+                document: '',
                 email: '',
                 password: '',
                 birthdate: '',

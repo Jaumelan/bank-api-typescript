@@ -1,8 +1,8 @@
 import { PostgresDB } from ".";
-import { AccountDB, UserComplete } from "../../../models";
+import { AccountDB, UserDB } from "../../../models";
 
 class WithdrawalAccountTable extends PostgresDB {
-  public async getAccountsData(data: UserComplete): Promise<AccountDB> {
+  public async getAccountsData(data: UserDB): Promise<AccountDB> {
     try {
       this.client.connect();
 

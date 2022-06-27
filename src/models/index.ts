@@ -11,3 +11,7 @@ export { RequestBankStatement } from './request-statement';
 export { RequisitiontBankStatement } from './extrato-query';
 export { AccountDB } from './account-db';
 export { WithdrawalReq } from './withdrawal-req';
+export { AccountUpdate } from './account-update';
+export { WithdrawalResponse } from './withdrawal-response';
+export { UserDB } from './user-db';
+export { WithdrawalValidated } from './withdrawal-validated';

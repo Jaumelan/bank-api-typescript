@@ -5,11 +5,12 @@ import {
   VerifyDigitAgencyValidator,
   CPFValidator,
   PasswordValidator,
+  AmountValidator
 } from '.';
-import { WithdrawalReq } from '../models';
+import { WithdrawalReq, WithdrawalValidated } from '../models';
 
 class WithdrawalReqValidator {
-  public withdrawalReq: WithdrawalReq;
+  public withdrawalReq: WithdrawalValidated;
 
   public errors: string;
 
@@ -23,6 +24,8 @@ class WithdrawalReqValidator {
 
   private CPFValidator = CPFValidator;
 
+  private amountValidator = AmountValidator;
+
   private PasswordValidator = PasswordValidator;
 
   public constructor(withdrawalReq: WithdrawalReq) {
@@ -30,7 +33,7 @@ class WithdrawalReqValidator {
     this.withdrawalReq = this.validate(withdrawalReq);
   }
 
-  private validate(withdrawalReq: WithdrawalReq): WithdrawalReq {
+  private validate(withdrawalReq: WithdrawalReq): WithdrawalValidated {
     const {
       account, value,
     } = withdrawalReq;
@@ -41,6 +44,7 @@ class WithdrawalReqValidator {
     const DigitAgencyValidated = new this.VerifyDigitAgencyValidator(account.agencyVerificationCode, account.agencyNumber);
     const cpfValidated = new this.CPFValidator(account.document);
     const passwordValidated = new this.PasswordValidator(account.accountPassword);
+    const amountValidated = new this.amountValidator(Number(value));
 
     this.errors = agencyValidated.errors
             + accountValidated.errors
@@ -48,9 +52,10 @@ class WithdrawalReqValidator {
             + DigitAgencyValidated.errors
             + cpfValidated.errors
             + passwordValidated.errors;
+            + amountValidated.errors;
 
     // console.log("withdrawalReq ", this.errors);
-    const withdrawalReqValidated: WithdrawalReq = {
+    const withdrawalReqValidated: WithdrawalValidated = {
       account: {
         agencyNumber: agencyValidated.agency,
         agencyVerificationCode: DigitAgencyValidated.verifyDigitAgency,
@@ -59,7 +64,7 @@ class WithdrawalReqValidator {
         document: cpfValidated.cpf,
         accountPassword: passwordValidated.password,
       },
-      value,
+      value: amountValidated.value,
     };
 
     return withdrawalReqValidated;

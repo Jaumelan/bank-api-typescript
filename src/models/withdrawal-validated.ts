@@ -1,4 +1,4 @@
-interface WithdrawalReq {
+interface WithdrawalValidated {
     account: {
         agencyNumber: string;
         agencyVerificationCode: string;
@@ -7,6 +7,6 @@ interface WithdrawalReq {
         document: string;
         accountPassword: string;
     },
-    value: string;
+    value: number;
 }
-export { WithdrawalReq };
+export { WithdrawalValidated };

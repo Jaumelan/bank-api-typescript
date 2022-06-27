@@ -1,7 +1,7 @@
 interface TransactionDB {
     id: string;
     date: string;
-    value: string;
+    value: number;
     originAccountID: string;
     destinationAccountID: string;
     type: string;
