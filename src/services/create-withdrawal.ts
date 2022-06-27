@@ -4,7 +4,7 @@ import {
   WithdrawalResponse,
   WithdrawalReq,
   TransactionDB,
-  AccountUpdate
+  AccountUpdate,
 } from "../models";
 import { ExceptionTreatment, DateWriter } from "../utils";
 import { WithdrawalReqValidator } from "../validators";
@@ -42,7 +42,7 @@ class CreateWithdrawalService {
         const account = await new this.AccountsTableData().getAccountsData(
           user
         );
-          //console.log('account ', account);
+        //console.log('account ', account);
         if (withdrawalReq.account.accountNumber !== account.account_number) {
           return {
             data: {},
@@ -77,7 +77,7 @@ class CreateWithdrawalService {
           } as APIResponse;
         }
 
-        if (account.balance === 0.00) {
+        if (account.balance === 0.0) {
           return {
             data: {},
             messages: ["Account balance is zero"],
@@ -114,40 +114,44 @@ class CreateWithdrawalService {
         };
 
         const updateData: AccountUpdate = {
-            accountId: account.id,
-            value: account.balance - withdrawalReq.value - 4,
-        }
+          accountId: account.id,
+          value: account.balance - withdrawalReq.value - 4,
+        };
 
         const response: WithdrawalResponse = {
-            data: {
-                transactionID: transacID,
-                type: "withdrawal",
-                value: withdrawalReq.value,
-                date: date.date,
-                account: {
-                    agencyNumber: account.agency_number,
-                    agencyVerificationCode: account.agency_verification_code,
-                    accountNumber: account.account_number,
-                    accountVerificationCode: account.account_verification_code,
-                    owner: user.name,
-                    document: user.document,
-                }
-            }
-        }
+          transactionID: transacID,
+          type: "withdrawal",
+          value: withdrawalReq.value,
+          date: date.date,
+          account: {
+            agencyNumber: account.agency_number,
+            agencyVerificationCode: account.agency_verification_code,
+            accountNumber: account.account_number,
+            accountVerificationCode: account.account_verification_code,
+            owner: user.name,
+            document: user.document,
+          },
+        };
         //console.log('withdrawaltax ', withdrawalTax);
         const withdrawalTaxTransaction = await new this.TransferTable().insert(
           withdrawalTax
         );
-          //console.log('transaction ', withdrawalTaxTransaction);
+        //console.log('transaction ', withdrawalTaxTransaction);
         //console.log('withdrawalTaxTransaction ', withdrawalTaxTransaction);
         const withdrawalTransaction = await new this.TransferTable().insert(
           withdrawal
         );
         //console.log('updateData ', updateData);
-        const updateAccount = await new this.UpdateAccountTable().update(updateData);
+        const updateAccount = await new this.UpdateAccountTable().update(
+          updateData
+        );
 
         //console.log('updateAccount ', updateAccount);
-        if (withdrawalTaxTransaction && withdrawalTransaction && updateAccount) {
+        if (
+          withdrawalTaxTransaction &&
+          withdrawalTransaction &&
+          updateAccount
+        ) {
           return {
             data: response,
             messages: ["Withdrawal created"],

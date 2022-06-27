@@ -120,19 +120,17 @@ class CreateDepositService {
         };
 
         const response: WithdrawalResponse = {
-          data: {
-            transactionID: transacID,
-            type: "deposit",
-            value: depositReq.value,
-            date: date.date,
-            account: {
-              accountNumber: account.account_number,
-              agencyVerificationCode: account.agency_verification_code,
-              agencyNumber: account.agency_number,
-              accountVerificationCode: account.account_verification_code,
-              owner: user.name,
-              document: user.document,
-            },
+          transactionID: transacID,
+          type: "deposit",
+          value: depositReq.value,
+          date: date.date,
+          account: {
+            accountNumber: account.account_number,
+            agencyVerificationCode: account.agency_verification_code,
+            agencyNumber: account.agency_number,
+            accountVerificationCode: account.account_verification_code,
+            owner: user.name,
+            document: user.document,
           },
         };
 

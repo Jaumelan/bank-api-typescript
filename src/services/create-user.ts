@@ -3,9 +3,12 @@ import { APIResponse, User, UserComplete } from '../models';
 import { ExceptionTreatment } from '../utils';
 import { UserDataValidator } from '../validators';
 import { UsersTable } from '../clients/dao/postgres/users';
+import { CheckUsersTable } from '../clients/dao/postgres/check-users';
 
 class CreateUserService {
   private UserDataValidator = UserDataValidator;
+
+  private CheckUsersTable = CheckUsersTable;
 
   private UsersTable = UsersTable;
 
@@ -15,6 +18,12 @@ class CreateUserService {
 
       if (userDataValidated.errors) {
         throw new Error(`400: ${userDataValidated.errors}`);
+      }
+
+      const checkUserExists = await new this.CheckUsersTable().getUserData(userDataValidated.user.cpf);
+
+      if (checkUserExists) {
+        throw new Error('400: user already exists');
       }
 
       const userValidated : UserComplete = {
