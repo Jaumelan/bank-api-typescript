@@ -1,5 +1,5 @@
-import { PostgresDB } from '.';
-import { Account } from '../../../models';
+import { PostgresDB } from ".";
+import { Account } from "../../../models";
 
 class AccountTable extends PostgresDB {
   public async insert(account: Account): Promise<boolean> {
@@ -14,6 +14,7 @@ class AccountTable extends PostgresDB {
                     account_number,
                     account_verification_code,
                     balance,
+                    password,
                     user_id
                 ) VALUES (
                     $1,
@@ -22,7 +23,8 @@ class AccountTable extends PostgresDB {
                     $4,
                     $5,
                     $6,
-                    $7
+                    $7,
+                    $8
                 ) RETURNING id
             `;
 
@@ -33,6 +35,7 @@ class AccountTable extends PostgresDB {
         account.account,
         account.verifyDigitAccount,
         account.balance,
+        account.password,
         account.userID,
       ]);
 
@@ -45,7 +48,7 @@ class AccountTable extends PostgresDB {
       return false;
     } catch (error) {
       this.client.end();
-      throw new Error('503: service temporarily unavailable');
+      throw new Error("503: service temporarily unavailable");
     }
   }
 }

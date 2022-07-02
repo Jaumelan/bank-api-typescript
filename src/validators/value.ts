@@ -21,6 +21,11 @@ class AmountValidator {
             return 0;
         }
 
+        if (value == 0) {
+            this.errors += 'value:O valor não pode ser zero.|';
+            return 0;
+        }
+
         if (value > 10000.00) {
             this.errors += 'value:O valor não pode ser maior que R$ 10000,00.|';
             return 0;

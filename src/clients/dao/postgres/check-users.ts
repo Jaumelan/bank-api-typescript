@@ -1,12 +1,13 @@
 import { PostgresDB } from ".";
+import { UserDB } from "../../../models";
 
 class CheckUsersTable extends PostgresDB {
-    public async getUserData(data: string): Promise<boolean> {
+    public async getUserData(data: string): Promise<UserDB> {
         try {
             this.client.connect();
 
             const getBankStatementQuery = `
-                    SELECT document FROM users WHERE document = $1
+                    SELECT * FROM users WHERE document = $1
                 `;
 
             const result = await this.client.query(getBankStatementQuery, [
@@ -18,10 +19,16 @@ class CheckUsersTable extends PostgresDB {
             // console.log('resultUsers ', result.rows);
 
             if (result.rows.length !== 0) {
-                return true;
+                return result.rows[0] as UserDB;
             }
 
-            return false;
+            return {
+                id: '',
+                name: '',
+                document: '',
+                email: '',
+                birthdate: '',
+            };
         } catch (error) {
             this.client.end();
             throw new Error('503: service temporarily unavailable');

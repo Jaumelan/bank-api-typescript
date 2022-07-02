@@ -8,7 +8,7 @@ class UpdateAccountTable extends PostgresDB {
 
       const updateAccountQuery = `
                 UPDATE accounts SET
-                    balance = $1
+                  balance = $1
                 WHERE id = $2
                 RETURNING id
             `;

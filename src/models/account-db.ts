@@ -6,5 +6,6 @@ interface AccountDB {
     account_number: string;
     account_verification_code: string;
     balance: number;
+    password: string;
 }
 export { AccountDB };

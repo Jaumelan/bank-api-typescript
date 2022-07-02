@@ -38,6 +38,11 @@ class TransferValidator {
             originAccount, destinationAccount, amount,
         } = transactionReq;
 
+        if (originAccount.agencyNumber === destinationAccount.agencyNumber) {
+            if (originAccount.accountNumber === destinationAccount.accountNumber) {
+                this.errors += 'originAccount:O número da conta de origem e de destino não podem ser iguais.|';
+            }
+        }
         const orAgencyValidated = new this.AgencyNumberValidator(originAccount.agencyNumber);
         const orAccountValidated = new this.AccountNumberValidator(originAccount.accountNumber);
         const orDigitAccountValidated = new this.VerifyDigitAccountValidator(originAccount.accountVerificationCode, originAccount.accountNumber);
@@ -51,7 +56,7 @@ class TransferValidator {
         const deDigitAgencyValidated = new this.VerifyDigitAgencyValidator(destinationAccount.agencyVerificationCode, destinationAccount.agencyNumber);
         const deCpfValidated = new this.CPFValidator(destinationAccount.document);
 
-        this.errors = orAgencyValidated.errors
+        this.errors += orAgencyValidated.errors
                 + orAccountValidated.errors
                 + orDigitAccountValidated.errors
                 + orDigitAgencyValidated.errors

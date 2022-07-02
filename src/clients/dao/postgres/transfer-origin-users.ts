@@ -27,7 +27,6 @@ class TransferOriginUsersTable extends PostgresDB {
                 name: '',
                 document: '',
                 email: '',
-                password: '',
                 birthdate: '',
             };
         } catch (error) {

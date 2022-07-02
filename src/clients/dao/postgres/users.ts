@@ -1,26 +1,24 @@
-import { PostgresDB } from '.';
-import { UserComplete } from '../../../models';
+import { PostgresDB } from ".";
+import { UserComplete } from "../../../models";
 
 class UsersTable extends PostgresDB {
   public async insert(user: UserComplete): Promise<boolean> {
     try {
       this.client.connect();
-
+      
       const insertUserQuery = `
                 INSERT INTO users (
                     id,
                     name,
                     email,
                     birthdate,
-                    document,
-                    password
+                    document
                 ) VALUES (
                     $1,
                     $2,
                     $3,
                     $4,
-                    $5,
-                    $6
+                    $5
                 ) RETURNING id
             `;
 
@@ -30,7 +28,6 @@ class UsersTable extends PostgresDB {
         user.email,
         user.birthdate,
         user.cpf,
-        user.password,
       ]);
 
       this.client.end();
@@ -42,7 +39,7 @@ class UsersTable extends PostgresDB {
       return false;
     } catch (error) {
       this.client.end();
-      throw new Error('503: service temporarily unavailable');
+      throw new Error("503: service temporarily unavailable");
     }
   }
 }

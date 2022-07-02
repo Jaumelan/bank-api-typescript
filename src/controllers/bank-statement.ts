@@ -1,17 +1,16 @@
-import { Request, Response } from 'express';
-import { RequestBankStatement } from '../models';
-import { GetExtractService } from '../services';
-import { ResponseWriter } from '../utils';
+import { Request, Response } from "express";
+import { RequestBankStatement } from "../models";
+import { GetExtractService } from "../services";
+import { ResponseWriter } from "../utils";
 
 class BankStatementController {
   private ResponseWriter = ResponseWriter;
 
   private GetExtract = GetExtractService;
 
-  // eslint-disable-next-line no-undef
   public async handle(
     request: Request<{}, {}, {}, RequestBankStatement>,
-    response: Response,
+    response: Response
   ): Promise<void> {
     try {
       // console.log('request received ', request.query);

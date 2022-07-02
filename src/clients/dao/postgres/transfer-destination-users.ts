@@ -27,7 +27,6 @@ class TransferDestinationUsersTable extends PostgresDB {
                 name: '',
                 document: '',
                 email: '',
-                password: '',
                 birthdate: '',
             };
         } catch (error) {

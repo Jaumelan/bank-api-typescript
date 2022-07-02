@@ -49,208 +49,238 @@ class CreateTransferService {
       );
       //console.log('user Dest ', destUser);
       if (originUser.id !== "") {
-        const orAccount = await new this.AccountsTableData().getAccountsData(
+        const orAccounts = await new this.AccountsTableData().getAccountsData(
           originUser
         );
         //console.log('account ', account);
-        if (
-          transactionReq.originAccount.accountNumber !==
-          orAccount.account_number
-        ) {
+        const orAccount = orAccounts.find((account) => {
+          if (
+            account.account_number ===
+            transactionReq.originAccount.accountNumber
+          ) {
+            return account;
+          }
+        });
+        if (orAccount) {
+          if (
+            transactionReq.originAccount.accountNumber !==
+            orAccount.account_number
+          ) {
+            return {
+              data: {},
+              messages: ["Origin account not found"],
+            } as APIResponse;
+          }
+
+          if (
+            transactionReq.originAccount.agencyNumber !==
+            orAccount.agency_number
+          ) {
+            return {
+              data: {},
+              messages: ["Origin agency not found"],
+            } as APIResponse;
+          }
+
+          if (
+            transactionReq.originAccount.agencyVerificationCode !==
+            orAccount.agency_verification_code
+          ) {
+            return {
+              data: {},
+              messages: ["Origin agency verify digit not found"],
+            } as APIResponse;
+          }
+
+          if (
+            transactionReq.originAccount.accountVerificationCode !==
+            orAccount.account_verification_code
+          ) {
+            return {
+              data: {},
+              messages: ["Origin account verify digit not found"],
+            } as APIResponse;
+          }
+
+          if (orAccount.balance === 0.0) {
+            return {
+              data: {},
+              messages: ["Account balance is zero"],
+            } as APIResponse;
+          }
+
+          if (transactionReq.amount > orAccount.balance + 1.0) {
+            return {
+              data: {},
+              messages: ["Insufficient balance"],
+            } as APIResponse;
+          }
+        } else
           return {
             data: {},
             messages: ["Origin account not found"],
           } as APIResponse;
-        }
-
-        if (
-          transactionReq.originAccount.agencyNumber !== orAccount.agency_number
-        ) {
-          return {
-            data: {},
-            messages: ["Origin agency not found"],
-          } as APIResponse;
-        }
-
-        if (
-          transactionReq.originAccount.agencyVerificationCode !==
-          orAccount.agency_verification_code
-        ) {
-          return {
-            data: {},
-            messages: ["Origin agency verify digit not found"],
-          } as APIResponse;
-        }
-
-        if (
-          transactionReq.originAccount.accountVerificationCode !==
-          orAccount.account_verification_code
-        ) {
-          return {
-            data: {},
-            messages: ["Origin account verify digit not found"],
-          } as APIResponse;
-        }
-
-        if (orAccount.balance === 0.0) {
-          return {
-            data: {},
-            messages: ["Account balance is zero"],
-          } as APIResponse;
-        }
-
-        if (transactionReq.amount > orAccount.balance + 1.0) {
-          return {
-            data: {},
-            messages: ["Insufficient balance"],
-          } as APIResponse;
-        }
 
         if (destUser.id !== "") {
-          const account = await new this.AccountsTableData().getAccountsData(
+          const accounts = await new this.AccountsTableData().getAccountsData(
             destUser
           );
+
+          const account = accounts.find((account) => {
+            if (
+              account.account_number ===
+              transactionReq.destinationAccount.accountNumber
+            ) {
+              return account;
+            }
+          });
           //console.log('account ', account);
-          if (
-            transactionReq.destinationAccount.accountNumber !==
-            account.account_number
-          ) {
-            return {
-              data: {},
-              messages: ["Destination account not found"],
-            } as APIResponse;
-          }
+          if (account) {
+            if (
+              transactionReq.destinationAccount.accountNumber !==
+              account.account_number
+            ) {
+              return {
+                data: {},
+                messages: ["Destination account not found"],
+              } as APIResponse;
+            }
 
-          if (
-            transactionReq.destinationAccount.agencyNumber !==
-            account.agency_number
-          ) {
-            return {
-              data: {},
-              messages: ["Destination agency not found"],
-            } as APIResponse;
-          }
+            if (
+              transactionReq.destinationAccount.agencyNumber !==
+              account.agency_number
+            ) {
+              return {
+                data: {},
+                messages: ["Destination agency not found"],
+              } as APIResponse;
+            }
 
-          if (
-            transactionReq.destinationAccount.agencyVerificationCode !==
-            account.agency_verification_code
-          ) {
-            return {
-              data: {},
-              messages: ["Destination agency verify digit not found"],
-            } as APIResponse;
-          }
+            if (
+              transactionReq.destinationAccount.agencyVerificationCode !==
+              account.agency_verification_code
+            ) {
+              return {
+                data: {},
+                messages: ["Destination agency verify digit not found"],
+              } as APIResponse;
+            }
 
-          if (
-            transactionReq.destinationAccount.accountVerificationCode !==
-            account.account_verification_code
-          ) {
-            return {
-              data: {},
-              messages: ["Destination account verify digit not found"],
-            } as APIResponse;
-          }
+            if (
+              transactionReq.destinationAccount.accountVerificationCode !==
+              account.account_verification_code
+            ) {
+              return {
+                data: {},
+                messages: ["Destination account verify digit not found"],
+              } as APIResponse;
+            }
 
-          const date = new this.DateWriter(new Date());
-          const taxID = v4();
-          const transacOrID = v4();
-          const transacDesID = v4();
+            const date = new this.DateWriter(new Date());
+            const taxID = v4();
+            const transacOrID = v4();
+            const transacDesID = v4();
 
-          const transactionTax: TransactionDB = {
-            id: taxID,
-            destinationAccountID: "bank",
-            originAccountID: orAccount.id,
-            value: 1,
-            date: date.date,
-            type: "transfer tax",
-          };
-
-          const transacOrigin: TransactionDB = {
-            id: transacOrID,
-            destinationAccountID: account.id,
-            originAccountID: orAccount.id,
-            value: transactionReq.amount,
-            date: date.date,
-            type: "transfer",
-          };
-
-          const transacDestination: TransactionDB = {
-            id: transacDesID,
-            destinationAccountID: account.id,
-            originAccountID: orAccount.id,
-            value: transactionReq.amount,
-            date: date.date,
-            type: "deposit",
-          };
-
-          const updateOrData: AccountUpdate = {
-            accountId: orAccount.id,
-            value: Number(orAccount.balance) - Number(transactionReq.amount) - 1.0,
-          };
-
-          const updateDestData: AccountUpdate = {
-            accountId: account.id,
-            value: Number(account.balance) + Number(transactionReq.amount),
-          };
-
-          console.log('updateDesti ', updateDestData);
-
-          const response: TransferResponse = {
-            data: {
-              transactionID: transacOrID,
-              type: "transfer",
-              value: transactionReq.amount.toString(),
+            const transactionTax: TransactionDB = {
+              id: taxID,
+              destinationAccountID: "bank",
+              originAccountID: orAccount.id,
+              value: 1,
               date: date.date,
-              originAccount: {
-                agencyNumber: orAccount.agency_number,
-                agencyVerificationCode: orAccount.agency_verification_code,
-                accountNumber: orAccount.account_number,
-                accountVerificationCode: orAccount.account_verification_code,
-                document: originUser.document,
+              type: "transfer tax",
+            };
+
+            const transacOrigin: TransactionDB = {
+              id: transacOrID,
+              destinationAccountID: account.id,
+              originAccountID: orAccount.id,
+              value: transactionReq.amount,
+              date: date.date,
+              type: "transfer",
+            };
+
+            const transacDestination: TransactionDB = {
+              id: transacDesID,
+              destinationAccountID: account.id,
+              originAccountID: orAccount.id,
+              value: transactionReq.amount,
+              date: date.date,
+              type: "deposit",
+            };
+
+            const updateOrData: AccountUpdate = {
+              accountId: orAccount.id,
+              value:
+                Number(orAccount.balance) - Number(transactionReq.amount) - 1.0,
+            };
+
+            const updateDestData: AccountUpdate = {
+              accountId: account.id,
+              value: Number(account.balance) + Number(transactionReq.amount),
+            };
+
+            //console.log("updateDesti ", updateDestData);
+
+            const response: TransferResponse = {
+              data: {
+                transactionID: transacOrID,
+                type: "transfer",
+                value: transactionReq.amount.toString(),
+                date: date.date,
+                originAccount: {
+                  agencyNumber: orAccount.agency_number,
+                  agencyVerificationCode: orAccount.agency_verification_code,
+                  accountNumber: orAccount.account_number,
+                  accountVerificationCode: orAccount.account_verification_code,
+                  document: originUser.document,
+                },
+                destinationAccount: {
+                  agencyNumber: account.agency_number,
+                  agencyVerificationCode: account.agency_verification_code,
+                  accountNumber: account.account_number,
+                  accountVerificationCode: account.account_verification_code,
+                  document: destUser.document,
+                },
               },
-              destinationAccount: {
-                agencyNumber: account.agency_number,
-                agencyVerificationCode: account.agency_verification_code,
-                accountNumber: account.account_number,
-                accountVerificationCode: account.account_verification_code,
-                document: destUser.document,
-              },
-            },
-          };
-          //console.log('withdrawaltax ', withdrawalTax);
-          const transferTaxTransaction = await new this.TransferTable().insert(
-            transactionTax
-          );
+            };
+            //console.log('withdrawaltax ', withdrawalTax);
+            const transferTaxTransaction =
+              await new this.TransferTable().insert(transactionTax);
 
-          //console.log('withdrawalTaxTransaction ', withdrawalTaxTransaction);
-          const transferOriginTransaction =
-            await new this.TransferTable().insert(transacOrigin);
+            //console.log('withdrawalTaxTransaction ', withdrawalTaxTransaction);
+            const transferOriginTransaction =
+              await new this.TransferTable().insert(transacOrigin);
 
-          const transferDestinationTransaction =
-            await new this.TransferTable().insert(transacDestination);
-          //console.log('updateData ', updateData);
-          const updateOriginAccount =
-            await new this.UpdateAccountTable().update(updateOrData);
+            const transferDestinationTransaction =
+              await new this.TransferTable().insert(transacDestination);
+            //console.log('updateData ', updateData);
+            const updateOriginAccount =
+              await new this.UpdateAccountTable().update(updateOrData);
 
-          const updateDestinyAccount =
-            await new this.UpdateAccountTable().update(updateDestData);
-          //console.log('updateAccount ', updateAccount);
-          if (
-            transferTaxTransaction &&
-            transferOriginTransaction &&
-            transferDestinationTransaction &&
-            updateOriginAccount &&
-            updateDestinyAccount
-          ) {
+            const updateDestinyAccount =
+              await new this.UpdateAccountTable().update(updateDestData);
+            //console.log('updateAccount ', updateAccount);
+            if (
+              transferTaxTransaction &&
+              transferOriginTransaction &&
+              transferDestinationTransaction &&
+              updateOriginAccount &&
+              updateDestinyAccount
+            ) {
+              return {
+                data: response,
+                messages: [],
+              } as APIResponse;
+            }
+
             return {
-              data: response,
-              messages: ["Withdrawal created"],
+              data: {},
+              messages: ["An error occurred while Withdrawal"],
             } as APIResponse;
           }
-
           return {
             data: {},
-            messages: ["An error occurred while Withdrawal"],
+            messages: ["Destination account not found"],
           } as APIResponse;
         }
         return {

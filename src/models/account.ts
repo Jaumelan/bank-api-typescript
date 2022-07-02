@@ -6,6 +6,7 @@ interface Account {
     account: string;
     verifyDigitAccount: string;
     balance: number;
+    password: string;
 }
 
 export { Account };

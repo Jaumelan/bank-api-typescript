@@ -1,24 +1,32 @@
 import { v4 } from 'uuid';
 import {
-  APIResponse, UserComplete, Account,
+  APIResponse, UserComplete, Account, AccountCreated,
 } from '../models';
 import { AccountTable } from '../clients/dao/postgres/account';
-import { AgencyAccountWriter, VerifyDigitCreator, ExceptionTreatment } from '../utils';
+import { CheckAccountsTable } from '../clients/dao/postgres/check-accounts';
+import { AgencyAccountWriter, VerifyDigitCreator, ExceptionTreatment, EncryptPassword } from '../utils';
 
 class CreateAccountService {
   private AgencyAccountWriter = AgencyAccountWriter;
 
   private VerifyDigitCreator = VerifyDigitCreator;
 
+  private EncryptPassword = EncryptPassword;
+
+  private AccountExist = CheckAccountsTable;
+
   public async execute(userData: UserComplete): Promise<APIResponse> {
     try {
+        
       const agencyString = new this.AgencyAccountWriter(4);
       const accountString = new this.AgencyAccountWriter(6);
       const verifyDigitAgencyString = new this.VerifyDigitCreator(agencyString.agencyAccount);
       const verifyDigitAccountString = new this.VerifyDigitCreator(accountString.agencyAccount);
+      const hashedPassword = new this.EncryptPassword(userData.password);
 
       const account: Account = {
         id: v4(),
+        password: hashedPassword.password,
         userID: userData.id,
         agency: agencyString.agencyAccount,
         verifyDigitAgency: verifyDigitAgencyString.verifyDigit,
@@ -33,8 +41,19 @@ class CreateAccountService {
         .insert(account);
 
       if (insertedAccount) {
+       
+        const data : AccountCreated = {
+          agency: account.agency,
+          agencyVerifyDigit: account.verifyDigitAgency,
+          account: account.account,
+          accountVerifyDigit: account.verifyDigitAccount,
+          owner: userData.name,
+          document: userData.cpf,
+          birthdate: userData.birthdate,
+        }
+
         return {
-          data: account,
+          data,
           messages: [],
         } as APIResponse;
       }

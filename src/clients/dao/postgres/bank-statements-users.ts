@@ -1,8 +1,8 @@
 import { PostgresDB } from '.';
-import { BankStatement, UserComplete } from '../../../models';
+import { BankStatement, UserDB } from '../../../models';
 
 class BankStatementUsersTable extends PostgresDB {
-  public async getUserData(data: BankStatement): Promise<UserComplete> {
+  public async getUserData(data: BankStatement): Promise<UserDB> {
     try {
       this.client.connect();
 
@@ -19,15 +19,14 @@ class BankStatementUsersTable extends PostgresDB {
       // console.log('resultUsers ', result.rows);
 
       if (result.rows.length !== 0) {
-        return result.rows[0] as UserComplete;
+        return result.rows[0] as UserDB;
       }
 
       return {
         id: '',
         name: '',
-        cpf: '',
+        document: '',
         email: '',
-        password: '',
         birthdate: '',
       };
     } catch (error) {

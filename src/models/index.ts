@@ -19,3 +19,5 @@ export { DepositRequisition } from './deposit-req';
 export { DepositValidated } from './deposit-validated';
 export { TransactionValidated } from './transaction-validated';
 export { TransferResponse } from './transfer-response';
+export { BankStatementTransactions } from './bank-statement-transactions';
+export { BankStatementResponse } from './bank-statement-response';
