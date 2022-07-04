@@ -7,7 +7,7 @@ import {
   TransactionDB,
   AccountUpdate,
 } from "../models";
-import { ExceptionTreatment, DateWriter } from "../utils";
+import { ExceptionTreatment, DateWriter, ComparePassword } from "../utils";
 import { TransferValidator } from "../validators";
 import { TransferDestinationUsersTable } from "../clients/dao/postgres/transfer-destination-users";
 import { TransferOriginUsersTable } from "../clients/dao/postgres/transfer-origin-users";
@@ -27,6 +27,8 @@ class CreateTransferService {
   private TransferTable = TransactionsTable;
 
   private UpdateAccountTable = UpdateAccountTable;
+
+  private CheckPassword = ComparePassword;
 
   private DateWriter = DateWriter;
 
@@ -99,6 +101,15 @@ class CreateTransferService {
             return {
               data: {},
               messages: ["Origin account verify digit not found"],
+            } as APIResponse;
+          }
+
+          const checkedPassword = new this.CheckPassword(transactionReq.originAccount.password).compareIt(orAccount.password);
+
+          if (!checkedPassword) {
+            return {
+              data: {},
+              messages: ["Account password not found"],
             } as APIResponse;
           }
 
