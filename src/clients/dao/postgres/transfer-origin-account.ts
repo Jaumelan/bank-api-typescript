@@ -30,6 +30,7 @@ class WithdrawalAccountTable extends PostgresDB {
         account_number: "",
         account_verification_code: "",
         balance: 0,
+        password: "",
       };
     } catch (error) {
       this.client.end();
